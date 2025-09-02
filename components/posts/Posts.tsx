@@ -73,6 +73,7 @@ export const Posts = ({ storyType }: { storyType: StoryType }) => {
 
   return (
     <FlatList
+      testID="flat-list"
       indicatorStyle="black"
       keyExtractor={(item) => item.id.toString()}
       data={posts}
