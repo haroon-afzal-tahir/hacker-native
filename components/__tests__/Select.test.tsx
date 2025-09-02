@@ -2,22 +2,34 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import { StoriesSelect, Option } from '../Select';
 import { StoryType } from '@/constants/stories';
+import { LucideIcon } from 'lucide-react-native';
+
+// Mock React Native Reanimated
+jest.mock('react-native-reanimated', () => {
+  const Reanimated = require('react-native-reanimated/mock');
+  // The mock for `call` immediately calls the callback which is incorrect
+  // So we override it with a no-op
+  Reanimated.default.call = () => {};
+  return Reanimated;
+});
+
+const Icon = (({ color, fill }: any) => <div data-testid="icon-top" style={{ color, fill }} />) as LucideIcon;
 
 const mockOptions: Option[] = [
   {
     id: 'topstories' as StoryType,
     label: 'Top Stories',
-    icon: ({ color, fill }: any) => <div data-testid="icon-top" style={{ color, fill }} />,
+    icon: Icon,
   },
   {
     id: 'newstories' as StoryType,
-    label: 'New Stories', 
-    icon: ({ color, fill }: any) => <div data-testid="icon-new" style={{ color, fill }} />,
+    label: 'New Stories',
+    icon: Icon,
   },
   {
     id: 'beststories' as StoryType,
     label: 'Best Stories',
-    icon: ({ color, fill }: any) => <div data-testid="icon-best" style={{ color, fill }} />,
+    icon: Icon,
   },
 ];
 
